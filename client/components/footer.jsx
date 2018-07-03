@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 const Footer = () => {
     
     return (
-        <footer>
+        <footer className="footer-container">
             <div className="wrap">
                 <div className="clearFloat">
                     <div className="left">

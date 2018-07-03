@@ -4,6 +4,7 @@ const models = require('../../db/models/index');
 const md5 = require('md5');
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
+const util = require('util');
 const permission = require('../permisson_utility');
 const _ = require('underscore');
 const ADMIN_UPDATE_ALLOWED_FIELDS = ['role', 'status', 'sex', 'name'];
@@ -39,14 +40,14 @@ const createUserInDatabase = async function (userParams) {
             },
             sex: userParams.sex || '',
             status: models.User.rawAttributes.status.defaultValue,
-            role: models.User.rawAttributes.role.defaultValue,
+            role: userParams.role || models.User.rawAttributes.role.defaultValue,
         });
 
         return {
             status: true,
             message: config.MESSAGES.SIGNUP_SUCCESSFUL_MESSAGE,
             args: {
-                user: user
+                user: _.pick(user.dataValues, USER_DETAILS_FIELDS)
             }
         };
     } catch (e) {
@@ -159,7 +160,7 @@ const listAllUsers = async (pageNumber, pageLimit) => {
 const updateUserDetails = async (updater, userArgs, userId) => {
     let user = await models.User.findOne({where: {id: userId}});
     if (!user)
-        return {status: false, message: config.MESSAGES.RESOURCE_NOT_FOUND};
+        return {status: false, message:util.format( config.MESSAGES.RESOURCE_NOT_FOUND, userId)};
     if (permission.canUpdateUser(updater, user)) {
         try {
             let updateVals = {};

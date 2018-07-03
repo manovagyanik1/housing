@@ -48,7 +48,38 @@
             "in": "body",
             "description": "User that we want to create",
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties":{
+                "email": {
+                  "type": "string",
+                  "uniqueItems": true,
+                  "example": "test@gmail.com"
+                },
+                "password":{
+                  "type": "string",
+                  "example": "pass1234"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "full name"
+                },
+                "sex": {
+                  "type": "string",
+                  "enum": [
+                    "male",
+                    "female",
+                    "other"
+                  ],
+                  "example": "sex"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "realtor",
+                    "consumer"
+                  ],
+                  "example": "consumer"
+                }
+              }
             }
           }
         ],

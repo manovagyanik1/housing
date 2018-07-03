@@ -3,7 +3,6 @@ import App from './app';
 import ContactPage from './pages/contactPage';
 import RegisterPage from './pages/registerPage';
 import LoginPage from './pages/loginPage';
-import About from './pages/aboutPage';
 import Property from './pages/propertyPage';
 import AddProperty from './pages/addPropertyPage';
 import Properties from './pages/propertiesPage';
@@ -45,15 +44,6 @@ export default [
             {
                 path: '/properties',
                 ...Properties
-            }
-        ]
-    },
-    {
-        path: '/about',
-        ...App,
-        routes: [
-            {
-                ...About
             }
         ]
     },

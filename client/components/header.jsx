@@ -84,13 +84,10 @@ class Header extends Component {
 
                                     Gen.isUserRealorOrAdmin(user) ?
                                         <li>
-                                            <NavLink activeClassName="active" to="/property/add">List Property</NavLink>
+                                            <NavLink activeClassName="active" to="/property/add">Add Property</NavLink>
                                         </li> : ''
                                 }
 
-                                <li>
-                                    <NavLink activeClassName="active" to="/about">About</NavLink> 
-                                </li>
                                 <li>
                                     <NavLink activeClassName="active" to="/contact">Contact</NavLink>
                                 </li>

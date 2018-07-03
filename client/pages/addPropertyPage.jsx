@@ -86,7 +86,7 @@ class AddPropertyPage extends Component {
       }
 
         if(!longitude) {
-            longitude = this.state.lnng;
+            longitude = this.state.lng;
         }
 
         const id = this.props.match.params.id || null;

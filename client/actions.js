@@ -7,11 +7,13 @@ import {actions} from './constants';
 export const fetchOtherUserDetails = (id) => async (dispatch, getState, api) => {
 
     await api.get(GET_OTHER_USER_DETAILS + "/" + id).then(response => {
+        console.log(response)
         dispatch({
             type: actions.FETCH_OTHER_USER_DATA,
             payload: response.data
         })
     }).catch((err) => {
+        console.log(err);
         console.log('error', err.response.data.error.message);
     })
 
@@ -20,6 +22,7 @@ export const fetchOtherUserDetails = (id) => async (dispatch, getState, api) => 
 export const fetchUserDetails = () => async (dispatch, getState, api) => {
 
     await api.get(GET_USER_DETAILS).then(response => {
+        console.log(response)
         dispatch({
             type: actions.FETCH_USER_DATA,
             payload: response.data
@@ -33,11 +36,13 @@ export const fetchUserDetails = () => async (dispatch, getState, api) => {
 export const clearUserDetails = () => async (dispatch, getState, api) => {
 
     await api.post(LOGOUT_USER, {}).then(response => {
+        console.log(response)
         dispatch({
             type: actions.CLEAR_USER_DATA,
             payload: response.data
         })
     }).catch((err) => {
+        console.log(err);
         console.log('error', err.response.data.error.message);
     })
 
@@ -47,6 +52,7 @@ export const clearUserDetails = () => async (dispatch, getState, api) => {
 export const fetchPropertyAction = (productID) => async (dispatch, getState, api) => {
 
     await api.get(GET_PROPERTY_ENDPOINT+'/'+productID).then(response => {
+        console.log(response)
         dispatch({
             type: 'FETCH_PROPERTY',
             payload: response.data.success.data

@@ -17,7 +17,7 @@ module.exports = {
     },
     maintenance: ['monthly', 'deposit', 'brokerage', 'annually'],
     MESSAGES:{
-        RESOURCE_NOT_FOUND: 'Resource not found with ID: %s',
+        RESOURCE_NOT_FOUND: 'Resource not found ',
         RESOURCE_UPDATED_SUCCESSFULLY: 'Resource has been updated successfully',
         RESOURCE_CREATED_SUCCESSFULLY: 'Resource has been created successfully',
         UNAUTHORIZED_ACCESS: 'You are not authorized for this action',

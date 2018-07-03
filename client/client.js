@@ -13,6 +13,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import webConfig from './../webConfig';
 import Routes from './routes';
 import reducers from './reducers';
+import {notify} from 'react-notify-toast';
 
 const axiosInstance = axios.create({
     baseURL: webConfig.axiosInstance_baseURL
@@ -25,7 +26,10 @@ axiosInstance.interceptors.response.use(function (response) {
 }, function (error) {
     if(error.response.status === 401 && !(window.location.href.includes("/login") || window.location.href.includes("/register"))) {
         window.location.href = "/login";
+    } else if(error.response.status === 400){
+        notify.show(error.response.data.error.message, 'error');
     }
+    return error;
 });
 
 

@@ -21,8 +21,9 @@ router.post('/signup', async (req, res, next) => {
     let password = req.body.password || '';
     let name = req.body.name || '';
     let sex = req.body.sex || '';
+    let role = req.body.role || 'consumer';
 
-    let retVal = await userValidator.validateAndSanitizeSignupDetails(email, name, password, sex);
+    let retVal = await userValidator.validateAndSanitizeSignupDetails(email, name, password, sex, role);
     if (retVal.status === false)
         genUtil.sendJsonResponse(res, 400, retVal.message, null);
     else {
