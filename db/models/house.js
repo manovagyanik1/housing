@@ -45,12 +45,12 @@ module.exports = (DataType, Sequelize) => {
             toDouble: true,
             validate: {
                 min:{
-                    args: [100],
-                    msg: 'Minimum rent should be 100'
+                    args: [500],
+                    msg: 'Minimum rent should be 500'
                 },
                 max:{
-                    args: [999000],
-                    msg: 'Maximum rent should be 999,000'
+                    args: [10000],
+                    msg: 'Maximum rent should be 10000'
                 }
             }
 
@@ -84,6 +84,9 @@ module.exports = (DataType, Sequelize) => {
                 min:{
                     args:[250],
                     msg: 'Built area cant be less than 250'
+                },max:{
+                    args: [10000],
+                    msg: 'Maximum builtArea should be 10000'
                 }
             }
         },
@@ -95,6 +98,10 @@ module.exports = (DataType, Sequelize) => {
                 min:{
                     args:[250],
                     msg: 'Carpet area cannot be less than 250'
+                },
+                max:{
+                    args: [10000],
+                    msg: 'Maximum carpetArea should be 10000'
                 },
                 isLessThanBuilt: (val , next) => {
                     if(!Number(val) || Number(val) > this.carpetArea)

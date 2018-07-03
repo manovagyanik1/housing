@@ -4,6 +4,7 @@ let x = require('./dev_config.js');
 module.exports = {
     ...x,
     baseUploadDir: 'public/uploads',
+    baseUploadURL: 'uploads',
     baseImageUploadDir: 'images',
     smtpConfig: {
         host: 'smtp.gmail.com',

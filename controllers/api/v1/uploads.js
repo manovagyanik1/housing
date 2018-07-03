@@ -38,9 +38,11 @@ router.post('/images', async (req, res, next) => {
     let files = Object.keys(req.files);
     for (let i = 0; i < files.length; i++) {
         let kycFile = req.files[files[i]];
-        var name = req.files[files[i]].name;
-        let filePath = util.format('%s/%s/%s-%s', config.baseUploadDir, config.baseImageUploadDir, uuid4(), name);
-        let url = config.baseUrl + "/" + filePath;
+        let name = req.files[files[i]].name;
+        let uuid = uuid4();
+        let filePath = util.format('%s/%s/%s-%s', config.baseUploadDir, config.baseImageUploadDir, uuid, name);
+        let URLPath = util.format('%s/%s/%s-%s', config.baseUploadURL, config.baseImageUploadDir, uuid, name);
+        let url = config.baseUrl + "/" + URLPath;
         kycFile.mv(filePath, async (err) => {
             if (err) {
                 console.log(err);

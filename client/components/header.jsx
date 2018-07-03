@@ -69,23 +69,23 @@ class Header extends Component {
                         <nav>
                             <ul>
 
+                                <li className="first">
+                                    <NavLink activeClassName="active" to="/properties">Home</NavLink>
+                                </li>
+
                                 {
                                     Gen.isUserAdmin(user) ?
-                                        <li className="first">
+                                        <li>
                                             <NavLink activeClassName="active" to="/users">Users</NavLink>
                                         </li> : ''
                                 }{
 
                                     Gen.isUserRealorOrAdmin(user) ?
-                                        <li className="first">
+                                        <li>
                                             <NavLink activeClassName="active" to="/property/add">List Property</NavLink>
                                         </li> : ''
                                 }
 
-
-                                <li className="first">
-                                    <NavLink activeClassName="active" to="/properties">Home</NavLink>
-                                </li>
                                 <li>
                                     <NavLink activeClassName="active" to="/about">About</NavLink> 
                                 </li>

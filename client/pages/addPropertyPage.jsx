@@ -17,6 +17,7 @@ import UploadImage from "../components/uploadImage";
 import {Gen} from "../helpers/gen";
 import {fetchPropertyAction} from "../actions";
 import {connect} from "react-redux";
+import LocationSearchInput from "../components/locationSearchInput";
 
 class AddPropertyPage extends Component {
 
@@ -28,6 +29,8 @@ class AddPropertyPage extends Component {
             showForm: true,
             images: [],
             initialized: false,
+            lat: null,
+            lng: null,
         };
     }
 
@@ -63,14 +66,28 @@ class AddPropertyPage extends Component {
         // no action
     }
 
+    latlngReceived(latlng) {
+        console.log(latlng);
+        const newState = {...this.state, ...latlng};
+        this.setState(newState);
+    }
+
 
     submit(data){
         this.toggle();
         console.log(data);
+        
+        const images = data.images ? Gen.mergeArray(data.images, this.state.images) : this.state.images;
 
-        const images = Gen.mergeArray(data.images, this.state.images);
+      let {title, country, city, locality, rent, builtArea, carpetArea, latitude, longitude, type, availability, availableFrom, description, availableFor, floor, address, powerBackup, maintenance, features, furnishingStatus} = data;
 
-      const {title, country, city, locality, rent, builtArea, carpetArea, latitude, longitude, type, availability, availableFrom, description, availableFor, floor, address, powerBackup, maintenance, features, furnishingStatus} = data;
+      if(!latitude) {
+          latitude = this.state.lat;
+      }
+
+        if(!longitude) {
+            longitude = this.state.lnng;
+        }
 
         const id = this.props.match.params.id || null;
         const endpoint = this.getPageType() === "Edit" ? UPDATE_PROPERTY_ENDPOINT + "/" + id : CREATE_PROPERTY_ENDPOINT;
@@ -94,7 +111,7 @@ class AddPropertyPage extends Component {
                     this.toggle();
                 });
         } else {
-            axios.put(endpoint, postData)
+            axios.post(endpoint, postData)
                 .then((success) => {
                     console.log(success.data.success.message);
                     this.toggle();
@@ -153,9 +170,7 @@ class AddPropertyPage extends Component {
                                             />
                                         </div>
 
-                                        {pageType === 'Edit' && propertyData && propertyData.images ? <UploadImage images={propertyData ? propertyData.images : []} addImage={this.addImage.bind(this)} removeImage={this.removeImage.bind(this)}/> : ''
-                                        }
-
+                                        <UploadImage images={propertyData ? propertyData.images : []} addImage={this.addImage.bind(this)} removeImage={this.removeImage.bind(this)}/>
                                         <div className="form_row">
                                             <Field
                                                 name="country"
@@ -223,6 +238,14 @@ class AddPropertyPage extends Component {
                                                 label="longitude:"
                                                 type="number"
                                             />
+                                        </div>
+
+
+                                        <div className="form_row">
+                                            <div className="form_label">
+                                                <label>Enter location</label>
+                                            </div>
+                                        <LocationSearchInput latlngReceived={this.latlngReceived.bind(this)}/>
                                         </div>
 
                                         <div className="form_row">

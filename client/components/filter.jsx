@@ -22,16 +22,16 @@ class Filter extends Component {
         this.state = {
             loading: false,
             rent: {
-                min: 100,
-                max: 999000
+                min: 500,
+                max: 10000
             },
             builtArea: {
                 min: 250,
-                max: 100000
+                max: 10000
             },
             carpetArea: {
                 min: 250,
-                max: 100000
+                max: 10000
             }
         }
     }
@@ -125,8 +125,8 @@ class Filter extends Component {
                         </div>
                         <InputRange
                             draggableTrack
-                            maxValue={999000}
-                            minValue={100}
+                            maxValue={10000}
+                            minValue={500}
                             onChange={value => this.updateState({rent: value})}
                             value={this.state.rent} />
                     </div>
@@ -141,7 +141,7 @@ class Filter extends Component {
                     </div>
                     <InputRange
                         draggableTrack
-                        maxValue={100000}
+                        maxValue={10000}
                         minValue={250}
                         onChange={value => this.updateState({builtArea: value})}
                         value={this.state.builtArea} />
@@ -155,7 +155,7 @@ class Filter extends Component {
                     </div>
                     <InputRange
                         draggableTrack
-                        maxValue={100000}
+                        maxValue={10000}
                         minValue={250}
                         onChange={value => this.updateState({carpetArea: value})}
                         value={this.state.carpetArea} />

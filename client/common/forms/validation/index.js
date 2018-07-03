@@ -28,8 +28,6 @@ export const validate_addProperty = values => {
         'rent',
         'builtArea',
         'carpetArea',
-        'latitude',
-        'longitude',
         'type',
         'availability',
         'availableFrom',
@@ -53,10 +51,10 @@ export const validate_addProperty = values => {
         errors.address = "address must be between 10 and 100 length";
 
     if(values.title && (values.title.length < 10 || values.title.length > 50))
-        errors.address = "title must be between 10 and 50 length";
+        errors.title = "title must be between 10 and 50 length";
 
     if(values.description && (values.description.length < 50 || values.description.length > 1000))
-        errors.address = "description must be between 50 and 1000 length";
+        errors.description = "description must be between 50 and 1000 length";
     return errors;
 
 }
