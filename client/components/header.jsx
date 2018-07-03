@@ -36,7 +36,9 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchUserDetails();
+        if(!(window.location.href.includes("/login") || window.location.href.includes("/register"))) {
+            this.props.fetchUserDetails();
+        }
         window.addEventListener('scroll', this.listenScrollEvent);
     }
     componentWillUnmount() {

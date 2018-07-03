@@ -18,6 +18,17 @@ const axiosInstance = axios.create({
     baseURL: webConfig.axiosInstance_baseURL
 });
 
+
+// Add a response interceptor
+axiosInstance.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    if(error.response.status === 401 && !(window.location.href.includes("/login") || window.location.href.includes("/register"))) {
+        window.location.href = "/login";
+    }
+});
+
+
 const store = createStore(
     reducers, 
     window.INITIAL_STATE,

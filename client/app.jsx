@@ -3,10 +3,14 @@ import {renderRoutes} from 'react-router-config';
 import Header from './components/header';
 import Footer from './components/footer';
 import Notifications from 'react-notify-toast';
+import { withRouter } from 'react-router-dom';
 
 
 class App extends Component {
 
+    componentDidCatch(error, info) {
+        console.log(error);
+    }
     render() {
         const options = {
             zIndex: 99999,
@@ -27,5 +31,5 @@ class App extends Component {
 
 
 export default {
-    component: App
+    component: withRouter(App)
 };
