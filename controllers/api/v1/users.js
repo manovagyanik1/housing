@@ -10,6 +10,8 @@ const models = require('../../../db/models/index');
 const notifier = require('../../../utilities/notifier/index');
 const urlcodeJson = require('urlcode-json');
 const router = express.Router();
+const _ = require('underscore');
+const USER_DETAILS_FIELDS = ['role', 'status', 'sex', 'name', 'email', 'id', 'createdAt', 'updatedAt'];
 
 
 /***
@@ -29,7 +31,7 @@ router.post('/signup', async (req, res, next) => {
     else {
         retVal = await userHelper.createUserInDatabase(retVal.args);
         notifier.notifyPasswordReset(retVal.args.user);
-        genUtil.sendJsonResponse(res, 201, retVal.message, retVal.args.user);
+        genUtil.sendJsonResponse(res, 201, retVal.message, _.pick(retVal.args.user.dataValues, USER_DETAILS_FIELDS));
     }
 
 });

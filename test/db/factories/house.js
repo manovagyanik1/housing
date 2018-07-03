@@ -24,10 +24,10 @@ const data = async (props = {}) => {
         floor: 2,
         availability: 'yes',
         features: ['Cover car parking', 'Centrally air conditioned', '24 hours security'],
-        builtArea: faker.random.number() + 250,
-        carpetArea: faker.random.number() + 250,
+        builtArea: faker.random.number()%9000 + 250 ,
+        carpetArea: faker.random.number()%9000 + 250,
         furnishingStatus: 'furnished',
-        rent: faker.random.number() + 100,
+        rent: faker.random.number()%9000 + 500,
         address: faker.address.streetName() + " " + faker.address.city,
         availableFrom: moment(),
     };

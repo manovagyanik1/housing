@@ -24,14 +24,14 @@ describe('House', async () => {
     let defaultHouseParams = {
         title: faker.name.firstName() + faker.name.lastName(),
         description: "This is just a test desription that will check what is valid description here around",
-        rent: faker.random.number(),
+        rent: faker.random.number()%9000 + 500,
         maintenance:{
             monthly:10,
             brokerage: 100,
             deposit: 2500
         },
-        builtArea: faker.random.number() + 250,
-        carpetArea: faker.random.number() + 250,
+        builtArea: faker.random.number()%9000 + 250,
+        carpetArea: faker.random.number()%9000 + 250,
         city: faker.address.city(),
         locality: faker.address.streetName(),
         country: faker.address.country().split(' ')[0],

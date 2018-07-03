@@ -47,7 +47,7 @@ const createUserInDatabase = async function (userParams) {
             status: true,
             message: config.MESSAGES.SIGNUP_SUCCESSFUL_MESSAGE,
             args: {
-                user: _.pick(user.dataValues, USER_DETAILS_FIELDS)
+                user: user
             }
         };
     } catch (e) {
