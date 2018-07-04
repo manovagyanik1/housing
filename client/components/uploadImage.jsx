@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import DropzoneComponent from 'react-dropzone-component';
 import {UPLOAD_IMAGE_ENDPOINT} from "../endpoints";

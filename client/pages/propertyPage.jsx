@@ -9,7 +9,7 @@ import InternalTextBanner from '../components/banners/internalTextBanner';
 import {Grid, Row, Col, Image, Button} from 'react-bootstrap';
 import ImageSlider from "../components/imageSlider";
 import MapContainer from "../components/map";
-import axios from 'axios';
+import axiosInstance from '../client';
 
 import TitleInfo from "../components/titleInfo";
 import {Gen} from "../helpers/gen";
@@ -30,7 +30,7 @@ class Property extends Component {
     }
 
     deleteProperty() {
-        axios.delete(DELETE_PROPERTY_ENDPOINT + "/" + this.props.match.params.id)
+        axiosInstance.delete(DELETE_PROPERTY_ENDPOINT + "/" + this.props.match.params.id)
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');

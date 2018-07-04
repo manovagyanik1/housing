@@ -11,7 +11,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
-import axios from 'axios';
+import axiosInstance from '../client';
 import {PASSWORD_RESET, RESEND_EMAIL, SIGN_UP_ENDPOINT_POST} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
 import {Gen} from "../helpers/gen";
@@ -42,7 +42,7 @@ class RegisterPage extends Component {
         console.log(data);
         const {token, password, email} = data;
 
-        axios.post(PASSWORD_RESET, {passwordToken: token, password, email})
+        axiosInstance.post(PASSWORD_RESET, {passwordToken: token, password, email})
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');

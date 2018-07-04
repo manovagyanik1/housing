@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import InputRange, {Range} from 'react-input-range';
-import Choose from "./choose";
 import { Field, reduxForm } from 'redux-form';
-import {notify} from 'react-notify-toast';
-import {Button} from 'react-bootstrap';
 import {renderDropdownList, renderMultiselect, renderTextField} from "../common/forms/input-types/index";
 import { validate_filters as validate }  from './../common/forms/validation';
 import LaddaButton, {SLIDE_UP, XL} from "react-ladda";
 import {Gen} from "../helpers/gen";
-import axios from 'axios';
-import {GET_PROPERTIES_ENDPOINT} from "../endpoints";
 
 
 

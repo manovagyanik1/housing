@@ -11,7 +11,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
-import axios from 'axios';
+import axiosInstance from '../client';
 import {LOG_IN_ENDPOINT_POST, PASSWORD_RESET} from "../endpoints";
 import {Gen} from "../helpers/gen";
 
@@ -35,7 +35,7 @@ class LoginPage extends Component {
     forgotPassword() {
         const email = document.getElementsByClassName('login-email')[0].value;
 
-        axios.get(`${PASSWORD_RESET}?email=${email}`,)
+        axiosInstance.get(`${PASSWORD_RESET}?email=${email}`,)
             .then((success) => {
                 console.log(success.data.success.message);
 
@@ -55,7 +55,7 @@ class LoginPage extends Component {
       console.log(data);
       const {email, password} = data;
 
-      axios.post(LOG_IN_ENDPOINT_POST, {email, password})
+      axiosInstance.post(LOG_IN_ENDPOINT_POST, {email, password})
           .then((success) => {
               console.log(success.data.success.message);
               this.setState({

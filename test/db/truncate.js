@@ -1,3 +1,5 @@
+process.env.NODE_ENV='test';
+
 const map = require('lodash/map');
 const models = require('../../db/models/index');
 

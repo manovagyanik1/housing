@@ -5,7 +5,7 @@ const isAuthenticated = async ( req, res, next ) => {
     let session = req.session;
 
     if ( session.user ) {
-        req.session.user = await models.User.findOne({where: {id: user.id}});
+        req.session.user = await models.User.findOne({where: {id: session.user.id}});
         return next();
     }else {
 

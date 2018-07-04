@@ -11,7 +11,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
-import axios from 'axios';
+import axiosInstance from '../client';
 import {RESEND_EMAIL, SIGN_UP_ENDPOINT_POST} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
 import {Gen} from "../helpers/gen";
@@ -38,7 +38,7 @@ class RegisterPage extends Component {
 
     resend() {
 
-        axios.get(`${RESEND_EMAIL}?email=${this.state.email}`,)
+        axiosInstance.get(`${RESEND_EMAIL}?email=${this.state.email}`,)
             .then((success) => {
                 console.log(success.data.success.message);
 
@@ -60,7 +60,7 @@ class RegisterPage extends Component {
         newState.email = email;
         this.setState(newState);
 
-        axios.post(SIGN_UP_ENDPOINT_POST, {name, email, password, sex: "male"})
+        axiosInstance.post(SIGN_UP_ENDPOINT_POST, {name, email, password, sex: "male"})
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');

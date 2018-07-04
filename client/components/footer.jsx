@@ -25,20 +25,17 @@ const Footer = () => {
                                 <li>    
                                     <Link to="/policies/cookies">Cookies policy</Link>
                                 </li>
-                                <li>    
-                                    <Link to="/contact">Contact</Link>
-                                </li>
                             </ul>
                         </div>
                         <div className="social_icons">
                             <ul>
                                 <li>    
-                                    <a href="https://www.facebook.com/SimpleTut" target="_blank">
+                                    <a href="https://www.facebook.com" target="_blank">
                                         <i className="fab fa-facebook-f"></i>
                                     </a>
                                 </li>
                                 <li>    
-                                    <a href="https://github.com/reactjs-starter-kit" target="_blank">
+                                    <a href="https://github.com" target="_blank">
                                         <i className="fab fa-github"></i>
                                     </a>
                                 </li>

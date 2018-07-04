@@ -11,7 +11,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
-import axios from 'axios';
+import axiosInstance from '../client';
 import {UPDATE_USER_ENDPOINT_PUT} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
 import {Gen} from "../helpers/gen";
@@ -53,7 +53,7 @@ class OtherUserProfile extends Component {
         console.log(data);
         const {id} = this.props.user;
 
-        axios.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
+        axiosInstance.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');

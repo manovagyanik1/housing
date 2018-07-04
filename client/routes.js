@@ -1,6 +1,5 @@
 import React from 'react';
 import App from './app';
-import ContactPage from './pages/contactPage';
 import RegisterPage from './pages/registerPage';
 import LoginPage from './pages/loginPage';
 import ResetPasswordPage from './pages/resetPasswordPage';
@@ -45,15 +44,6 @@ export default [
             {
                 path: '/properties',
                 ...Properties
-            }
-        ]
-    },
-    {
-        path: '/contact',
-        ...App,
-        routes: [
-            {
-                ...ContactPage
             }
         ]
     },

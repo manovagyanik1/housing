@@ -88,10 +88,6 @@ class Header extends Component {
                                         </li> : ''
                                 }
 
-                                <li>
-                                    <NavLink activeClassName="active" to="/contact">Contact</NavLink>
-                                </li>
-
                                 {
                                     user ? <li className="last">
                                         <NavLink activeClassName="active" to="/user/profile">{user.name}</NavLink> </li>: <li className="last">

@@ -6,18 +6,22 @@ Dependencies
   - Node 9.8
 
 Database setup
-  - create database ```rental```
-  - create user with username ```rental```
-  - assign password to user ```rental```
+  - create database ```aptrental_dev```
+  - create database ```aptrental_test```
+  - create user with username ```aptrental_dev```
+  - assign password to user ```aptrental_dev```
   - start postgres on default port ```5432```
+
 
 Setup Database
 
 ```$xslt
-$ create database rental;
-$ create user rental;
-$ ALTER USER rental WITH PASSWORD 'rental';
-$ grant all privileges on database rental to rental;
+$ create database aptrental_dev;
+$ create database aptrental_test;
+$ create user aptrental_dev;
+$ ALTER USER rental WITH PASSWORD 'aptrental_dev';
+$ grant all privileges on database aptrental_dev to aptrental_dev;
+$ grant all privileges on database aptrental_test to aptrental_dev;
 
 ```
 Install the Node
@@ -32,15 +36,17 @@ Install and run the API module
 ```
 $ cd project
 $ npm i
-$ NODE_ENV=production ./node_modules/.bin/sequelize db:migrate
-$ NODE_ENV=production ./node_modules/.bin/sequelize db:seed:all
-$ NODE_ENV=production node ./bin/www
+$ npm run migrate
+$ npm run seed-all
+$ npm run server
+$ npm run prod
+$ npm run built-dev
 ```
 
 
 API Documentation:
-```angular2html
-/api-docs/
+```
+localhost:3000/api-docs/
 ```
 
 

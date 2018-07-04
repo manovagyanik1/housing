@@ -9,7 +9,7 @@ import { renderTextField, renderMultiselect, renderTextarea } from './../common/
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 
-import axios from 'axios';
+import axiosInstance from '../client';
 import {renderDateTimePicker, renderDropdownList} from "../common/forms/input-types/index";
 import {CREATE_PROPERTY_ENDPOINT, UPDATE_PROPERTY_ENDPOINT} from "../endpoints";
 import LaddaButton, {SLIDE_UP, XL} from "react-ladda";
@@ -97,7 +97,7 @@ class AddPropertyPage extends Component {
         const postData = {id, images, title, country, city, locality, rent, builtArea, carpetArea, latitude, longitude, type, availability, availableFrom, description, availableFor, floor, address, powerBackup, maintenance, features, furnishingStatus};
 
         if(this.getPageType() === "Edit") {
-            axios.put(endpoint, postData)
+            axiosInstance.put(endpoint, postData)
                 .then((success) => {
                     console.log(success.data.success.message);
                     this.toggle();
@@ -113,7 +113,7 @@ class AddPropertyPage extends Component {
                     this.toggle();
                 });
         } else {
-            axios.post(endpoint, postData)
+            axiosInstance.post(endpoint, postData)
                 .then((success) => {
                     console.log(success.data.success.message);
                     this.toggle();
