@@ -15,7 +15,7 @@ import {CREATE_PROPERTY_ENDPOINT, UPDATE_PROPERTY_ENDPOINT} from "../endpoints";
 import LaddaButton, {SLIDE_UP, XL} from "react-ladda";
 import UploadImage from "../components/uploadImage";
 import {Gen} from "../helpers/gen";
-import {fetchPropertyAction} from "../actions";
+import {clearPropertyData, fetchPropertyAction} from "../actions";
 import {connect} from "react-redux";
 import LocationSearchInput from "../components/locationSearchInput";
 
@@ -39,10 +39,12 @@ class AddPropertyPage extends Component {
         return id ? "Edit" : "Create";
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const id = this.props.match.params.id || null;
         if(id) {
             this.props.fetchPropertyAction(id);
+        } else {
+            this.props.clearPropertyData();
         }
     }
 
@@ -141,6 +143,10 @@ class AddPropertyPage extends Component {
 
       const { handleSubmit, propertyData } = this.props;
       const pageType = this.getPageType();
+
+      if((pageType === 'Edit' && !propertyData) || (pageType === 'Create' && propertyData)) {
+          return null;
+      }
 
       return (
           
@@ -419,5 +425,5 @@ AddPropertyPage = reduxForm({
 })(AddPropertyPage);
 
 export default {
-    component: connect(mapStateToProps, { fetchPropertyAction })(AddPropertyPage)
+    component: connect(mapStateToProps, { fetchPropertyAction, clearPropertyData })(AddPropertyPage)
 };
