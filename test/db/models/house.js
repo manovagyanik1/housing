@@ -24,8 +24,8 @@ describe('House model', () => {
     });
 
     it('should create house with string form of rent', async()=>{
-        let h = await houseFactory({rent:'121211 '});
-        assert(h.rent === 121211);
+        let h = await houseFactory({rent:'1212'});
+        assert(h.rent === 1212);
 
     });
 

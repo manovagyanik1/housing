@@ -172,6 +172,7 @@ const updateUserDetails = async (updater, userArgs, userId) => {
             Object.assign(user, user, updateVals);
             await user.validate({skip: ['email']});
             await user.save();
+
             return {
                 status: true,
                 message: 'Permissible Fields are updated'

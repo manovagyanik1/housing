@@ -11,8 +11,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 import { withRouter } from 'react-router-dom'
+import axiosInstance from '../client';
 
-import axios from 'axios';
 import {UPDATE_USER_ENDPOINT_PUT} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
 import {Gen} from "../helpers/gen";
@@ -48,7 +48,7 @@ class UserProfile extends Component {
         console.log(data);
         const {id} = this.props.user;
 
-        axios.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
+        axiosInstance.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');
@@ -62,8 +62,12 @@ class UserProfile extends Component {
                     loading: false,
                     showForm: true
                 })
-                console.log(error.response.data.error.message);
-                notify.show(error.response.data.error.message, 'error');
+
+                if(error.response.data && error.response.data.message) {
+                    console.log(error.response.data.error.message);
+                    notify.show(error.response.data.error.message, 'error');
+                }
+
             });
 
   }

@@ -13,10 +13,14 @@ const models = require('../../db/models/index');
 const md5 = require('md5');
 const sinon = require('sinon');
 const controllerMiddleware = require('../../utilities/controller_middlewares');
-let server = null;
-
+let server = require('../../app');
+const session = require( "express-session" );
+const request = require('supertest');
 
 chai.use(chaiHttp);
+
+const authenticatedUser = request.agent(server);
+
 
 describe('Users', async () => {
     let defaultUser = {
@@ -27,32 +31,31 @@ describe('Users', async () => {
         role: 'consumer',
         status: 'active'
     };
-    let user = null;
+    let user = null ;
 
 
     beforeEach(async () => {
-
         await truncate();
+
         user = await userFactory({
             emailAttributes: { verified: true},
             passwordAttributes: {salt: '1234', hash: md5('1234'+ '1234')},
             role: 'admin'
         });
-        sinon.stub(controllerMiddleware, 'isAuthenticated').callsFake((req, res, next) => {
-            req.session.user = user;
-            return next();
-        });
-        server = require('../../app');
+        let res = await authenticatedUser
+            .post('/api/v1/user/login')
+            .send({"email": user.email, "password": "1234"});
+
+        res.status
     });
 
     afterEach(async () =>{
-        controllerMiddleware.isAuthenticated.restore();
+
     });
 
     describe('/:id PUT update user details', async ()=>{
         it('should update user details', async () => {
-            let u =  await userFactory();
-            let res = await chai.request(server)
+            let res = await authenticatedUser
                 .put('/api/v1/user/'+user.id)
                 .send({sex:'other'});
             res.should.have.status(200);

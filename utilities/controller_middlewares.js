@@ -5,19 +5,21 @@ const isAuthenticated = async ( req, res, next ) => {
     let session = req.session;
 
     if ( session.user ) {
+        req.session.user = await models.User.findOne({where: {id: user.id}});
         return next();
-    }
-    
-    // let u = await models.User.findOne( { "where": {
-    //     "email": "manovagyanik1@gmail.com"
-    // } } );
-    //
-    // req.session.user = u;
-    // return next();
-    
+    }else {
 
-    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-    genUtil.sendJsonResponse( res, 401, "Unauthorized access", null );
+        // let u = await models.User.findOne( { "where": {
+        //     "email": "manovagyanik1@gmail.com"
+        // } } );
+        //
+        // req.session.user = u;
+        // return next();
+
+
+        // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
+        genUtil.sendJsonResponse(res, 401, "Unauthorized access", null);
+    }
 };
 
 

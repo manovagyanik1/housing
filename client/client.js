@@ -39,6 +39,8 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(thunk.withExtraArgument(axiosInstance)))
 );
 
+export default axiosInstance;
+
 ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>
