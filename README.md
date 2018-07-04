@@ -41,6 +41,7 @@ $ npm run seed-all
 $ npm run server
 $ npm run prod
 $ npm run built-dev
+$ npm run test
 ```
 
 

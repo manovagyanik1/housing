@@ -5,8 +5,13 @@ const isAuthenticated = async ( req, res, next ) => {
     let session = req.session;
 
     if ( session.user ) {
-        req.session.user = await models.User.findOne({where: {id: session.user.id}});
-        return next();
+        let user = await models.User.findOne({where: {id: session.user.id}});
+        if (user && user.status == 'active'){
+            req.session.user = user
+            return next();
+        }else{
+            genUtil.sendJsonResponse(res, 401, "Unauthorized access");
+        }
     }else {
 
         // let u = await models.User.findOne( { "where": {

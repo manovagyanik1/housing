@@ -11,7 +11,7 @@
     "migrate-undo": "node_modules/.bin/sequelize db:migrate:undo:all",
     "seed-all": "node_modules/.bin/sequelize db:seed:all",
     "prod": "NODE_ENV=production webpack --config webpack.prod.js",
-    "test": "node_modules/.bin/mocha test/ --recursive --exit"
+    "test": "NODE_ENV=test node_modules/.bin/mocha test/ --recursive --exit"
   },
   "dependencies": {
     "await-to-js": "^2.0.1",
