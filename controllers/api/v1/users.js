@@ -30,7 +30,7 @@ router.post('/signup', async (req, res, next) => {
         genUtil.sendJsonResponse(res, 400, retVal.message, null);
     else {
         retVal = await userHelper.createUserInDatabase(retVal.args);
-        notifier.notifyPasswordReset(retVal.args.user);
+        notifier.notifyEmailConfirmation(retVal.args.user);
         genUtil.sendJsonResponse(res, 201, retVal.message, _.pick(retVal.args.user.dataValues, USER_DETAILS_FIELDS));
     }
 
@@ -81,6 +81,9 @@ router.get('/email_confirmation', async (req, res, next) => {
 router.get('/password_reset', async (req, res, next) => {
     let email = req.query.email;
     let retVal = await userHelper.resendPasswordResetToken(email);
+    if (retVal.status)
+        await notifier.notifyPasswordReset(retVal.args.user);
+
     genUtil.sendJsonResponse(res, retVal.status ? 200 : 400, retVal.message, null);
 });
 

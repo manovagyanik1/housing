@@ -12,8 +12,9 @@ import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
 import axios from 'axios';
-import {SIGN_UP_ENDPOINT_POST} from "../endpoints";
+import {RESEND_EMAIL, SIGN_UP_ENDPOINT_POST} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
+import {Gen} from "../helpers/gen";
 
 class RegisterPage extends Component {
 
@@ -23,6 +24,7 @@ class RegisterPage extends Component {
         this.state = {
             loading: false,
             showForm: true,
+            email: null,
         };
     }
 
@@ -34,15 +36,33 @@ class RegisterPage extends Component {
         });
     }
 
+    resend() {
+
+        axios.get(`${RESEND_EMAIL}?email=${this.state.email}`,)
+            .then((success) => {
+                console.log(success.data.success.message);
+
+                notify.show(success.data.success.message, 'success');
+
+            })
+            .catch((error) => {
+                console.log(error.response.data.error.message);
+                notify.show(error.response.data.error.message, 'error');
+            });
+    }
+
     submit(data){
         this.toggle();
         console.log(data);
         const {name, email, password} = data;
 
+        const newState = Gen.objectCopy(this.state);
+        newState.email = email;
+        this.setState(newState);
+
         axios.post(SIGN_UP_ENDPOINT_POST, {name, email, password, sex: "male"})
             .then((success) => {
                 console.log(success.data.success.message);
-                this.toggle();
                 notify.show(success.data.success.message, 'success');
                 this.setState({
                     loading: false,
@@ -50,9 +70,12 @@ class RegisterPage extends Component {
                 })
             })
             .catch((error) => {
+                this.setState({
+                    loading: false,
+                    showForm: true
+                })
                 console.log(error.response.data.error.message);
                 notify.show(error.response.data.error.message, 'error');
-                this.toggle();
             });
 
   }
@@ -83,6 +106,12 @@ class RegisterPage extends Component {
                                 !this.state.showForm ? <div className="confirm_email_block">
                                     <div className="confirm_email_check">
                                         Sign up successful, Check your email and verify
+
+                                        <div className="resend-email-container">
+                                            <div onClick={this.resend.bind(this)}  className="resend-email">
+                                                Didn't receive email? Click to resend.
+                                            </div>
+                                        </div>
                                     </div>
                                     <Link className="proceed-to-link" to="/login">Proceed to login</Link>
 

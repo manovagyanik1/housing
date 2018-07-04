@@ -13,6 +13,7 @@ const uploadsRouter = require( "./controllers/api/v1/uploads" );
 const houseRouter = require( "./controllers/api/v1/houses" );
 const fileUplad = require( "express-fileupload" );
 const app = express();
+const compression = require( "compression" );
 
 app.use( session( { "secret": "SecretNumber%$^&$^", "cookie": { "maxAge": 1000 * 60 * 60 * 24 } } ) );  // 24 hour max age
 
@@ -22,6 +23,8 @@ app.use( ( req, res, next ) => {
     res.header( "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
     next();
 } );
+
+app.use( compression() );
 
 
 // view engine setup

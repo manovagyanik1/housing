@@ -24,7 +24,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if(error.response.status === 401 && !(window.location.href.includes("/login") || window.location.href.includes("/register"))) {
+    if(error.response.status === 401 && !(window.location.href.includes("/login")  || window.location.href.includes("/register") || window.location.href.includes("/reset-password"))) {
         window.location.href = "/login";
     } else if(error.response.status === 400){
         notify.show(error.response.data.error.message, 'error');

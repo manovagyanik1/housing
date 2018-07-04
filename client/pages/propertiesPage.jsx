@@ -97,10 +97,9 @@ class Properties extends Component {
 
     fetchPropertyAndHideFilterOnMobile(data) {
         this.props.clearNextUrl();
-        this.hideFilter();
         this.props.fetchPropertiesAction(data);
         this.setState({
-            showFilterOnMobile: this.state.showFilterOnMobile,
+            showFilterOnMobile: false,
             filters: data
         })
     }

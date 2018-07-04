@@ -21,9 +21,6 @@ const sendEmailConfirmationMail = async (name, email, confirmationUrl) => {
 
     try {
         let retVal = await transporter.sendMail(mailOption);
-        console.log('Message sent: %s', retVal.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(retVal));
         return {
             status: true
         }
@@ -47,9 +44,7 @@ const sendPasswordResetTokenMail = async (name, email, token) => {
 
     try {
         let retVal = await transporter.sendMail(mailOption);
-        console.log('Message sent: %s', retVal.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(retVal));
+        console.log('sent email to: ', email);
         return {
             status: true
         }

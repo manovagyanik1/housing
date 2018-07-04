@@ -56,7 +56,6 @@ class OtherUserProfile extends Component {
         axios.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
             .then((success) => {
                 console.log(success.data.success.message);
-                this.toggle();
                 notify.show(success.data.success.message, 'success');
                 this.setState({
                     loading: false,
@@ -64,9 +63,12 @@ class OtherUserProfile extends Component {
                 })
             })
             .catch((error) => {
+                this.setState({
+                    loading: false,
+                    showForm: true
+                })
                 console.log(error.response.data.error.message);
                 notify.show(error.response.data.error.message, 'error');
-                this.toggle();
             });
   }
 

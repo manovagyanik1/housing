@@ -115,7 +115,7 @@ export const validate_registerForm = values => {
     if (
         values.email && values.email.length < 6
     ) {
-        errors.email = 'Invalid password'
+        errors.password = 'Invalid password'
     }
 
     return errors;
@@ -127,8 +127,7 @@ export const validate_loginForm = values => {
     const errors = {}
 
     const requiredFields = [
-        'email',
-        'password'
+        'email'
     ]
 
     requiredFields.forEach(field => {
@@ -144,11 +143,33 @@ export const validate_loginForm = values => {
         errors.email = 'Invalid email address'
     }
 
+
+    return errors;
+
+}
+
+export const validate_resetForm = values => {
+
+    const errors = {}
+
+    const requiredFields = [
+        'token',
+        'password',
+        'confirmPassword'
+    ]
+
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = 'Required'
+        }
+    })
+
     if (
-        values.email && values.email.length < 6
+        values.password !== values.confirmPassword
     ) {
-        errors.email = 'Invalid password'
+        errors.confirmPassword = 'Passwords do not match'
     }
+
 
     return errors;
 

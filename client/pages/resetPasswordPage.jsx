@@ -5,20 +5,18 @@ import {Link, NavLink} from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
 import LaddaButton, { XL, SLIDE_UP } from 'react-ladda';
 import {notify} from 'react-notify-toast';
-import { validate_registerForm as validate }  from './../common/forms/validation';
+import { validate_resetForm as validate }  from './../common/forms/validation';
 import { renderTextField, renderTextarea } from './../common/forms/input-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
-import { withRouter } from 'react-router-dom'
 
 import axios from 'axios';
-import {UPDATE_USER_ENDPOINT_PUT} from "../endpoints";
+import {PASSWORD_RESET, RESEND_EMAIL, SIGN_UP_ENDPOINT_POST} from "../endpoints";
 import {renderDropdownList} from "../common/forms/input-types/index";
 import {Gen} from "../helpers/gen";
-import {clearUserDetails, fetchOtherUserDetails} from "../actions";
 
-class UserProfile extends Component {
+class RegisterPage extends Component {
 
     constructor(props) {
         super(props);
@@ -26,6 +24,7 @@ class UserProfile extends Component {
         this.state = {
             loading: false,
             showForm: true,
+            email: null,
         };
     }
 
@@ -37,18 +36,13 @@ class UserProfile extends Component {
         });
     }
 
-    logout(e) {
-        e.preventDefault();
-        this.props.clearUserDetails();
-        this.props.history.push(`/login`);
-    }
 
     submit(data){
         this.toggle();
         console.log(data);
-        const {id} = this.props.user;
+        const {token, password, email} = data;
 
-        axios.put(UPDATE_USER_ENDPOINT_PUT + '/' + id, data)
+        axios.post(PASSWORD_RESET, {passwordToken: token, password, email})
             .then((success) => {
                 console.log(success.data.success.message);
                 notify.show(success.data.success.message, 'success');
@@ -71,37 +65,35 @@ class UserProfile extends Component {
   head(){
     return (
         <Helmet bodyAttributes={{class: "contactPage"}}>
-          <title>{`User Profile - ${appName}`}</title>
+          <title>{`Reset Password - ${appName}`}</title>
         </Helmet>
     );
   }
 
     render() {
-      const { handleSubmit } = this.props;
+      const { handleSubmit } = this.props
 
       return (
 
           <section className="contactPage_wrap">
           {this.head()}
-            <InternalTextBanner Heading="User Profile" wrapperClass="contact" />
+            <InternalTextBanner Heading="Reset Password" wrapperClass="contact" />
             <ReactCSSTransitionGroup transitionName="anim" transitionAppear={true}  transitionAppearTimeout={5000} transitionEnter={false} transitionLeave={false}>
             <div className="main anim-appear">
                   <div className="grid">
                       <div className="column column_12_12">
                         <div className="content_block">
 
-                             <form className="user-profile-container" onSubmit={handleSubmit(this.submit.bind(this))}>
+                            {
+                                !this.state.showForm ? <div className="confirm_email_block">
+                                    <div className="confirm_email_check">
+                                        Password reset successful
+                                    </div>
+                                    <Link className="proceed-to-link" to="/login">Proceed to login</Link>
+
+                                </div> : <form onSubmit={handleSubmit(this.submit.bind(this))}>
 
                                     <div className="form_wrap">
-
-
-                                        <div className="form_row">
-                                            <Field
-                                                name="name"
-                                                component={renderTextField}
-                                                label="Name:"
-                                            />
-                                        </div>
 
 
                                         <div className="form_row">
@@ -109,35 +101,35 @@ class UserProfile extends Component {
                                                 name="email"
                                                 component={renderTextField}
                                                 label="Email:"
+                                                className="login-email"
                                             />
                                         </div>
 
                                         <div className="form_row">
                                             <Field
-                                                name="sex"
-                                                component={renderDropdownList}
-                                                label="Sex:"
-                                                data={[ 'male', 'female' ]}/>
+                                                name="token"
+                                                component={renderTextField}
+                                                label="Password Token:"
+                                            />
                                         </div>
 
                                         <div className="form_row">
                                             <Field
-                                                name="role"
-                                                component={renderDropdownList}
-                                                label="User Type:"
-                                                data={[ 'admin', 'realtor', 'consumer' ]}/>
+                                                name="password"
+                                                component={renderTextField}
+                                                label="Password:"
+                                                type="password"
+                                            />
                                         </div>
 
-                                        {
-                                            Gen.isUserAdmin() ?  <div className="form_row">
-                                                <Field
-                                                    name="status"
-                                                    component={renderDropdownList}
-                                                    label="Status:"
-                                                    data={[ 'active', 'inactive' ]}/>
-                                            </div>: ''
-                                        }
-
+                                        <div className="form_row">
+                                            <Field
+                                                name="confirmPassword"
+                                                component={renderTextField}
+                                                label="Confirm Password:"
+                                                type="password"
+                                            />
+                                        </div>
 
                                         <div className="form_buttons">
                                             <LaddaButton
@@ -151,18 +143,19 @@ class UserProfile extends Component {
                                                 data-spinner-color="#ddd"
                                                 data-spinner-lines={12}
                                             >
-                                                Update Profile
+                                                Reset
                                             </LaddaButton>
                                         </div>
-
-                                        <Link className="logout-link" to="/" onClick={this.logout.bind(this)}>Logout</Link>
                                     </div>
 
-                            </form>
+                                </form>
+
+                            }
+
+                        </div>
                       </div>
                   </div>
               </div>
-            </div>
               </ReactCSSTransitionGroup>
 
           </section>
@@ -172,20 +165,19 @@ class UserProfile extends Component {
   }
 
 
-UserProfile = reduxForm({
-      form: 'userProfileForm',
+  RegisterPage = reduxForm({
+      form: 'resetForm',
       validate,
       enableReinitialize: true,
-  })(UserProfile);
+  })(RegisterPage);
 
 
 function mapStateToProps(state){
     return {
-        user: state.user,
-        initialValues: state.user
+        user: state.user
     };
 };
 
 export default {
-  component: withRouter(connect(mapStateToProps, {clearUserDetails})(UserProfile))
+  component: connect(mapStateToProps)(RegisterPage)
 };

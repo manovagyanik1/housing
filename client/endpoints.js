@@ -11,6 +11,9 @@ export const UPDATE_USER_ENDPOINT_PUT = config.axiosInstance_baseURL+'/api/v1/us
 export const GET_USER_DETAILS = config.axiosInstance_baseURL+'/api/v1/user/details';
 export const GET_USERS_ENDPOINT = config.axiosInstance_baseURL+'/api/v1/user';
 export const GET_OTHER_USER_DETAILS = config.axiosInstance_baseURL+'/api/v1/user';
+export const RESEND_EMAIL = config.axiosInstance_baseURL+'/api/v1/user/email_confirmation';
+export const PASSWORD_RESET = config.axiosInstance_baseURL+'/api/v1/user/password_reset';
+
 export const UPLOAD_IMAGE_ENDPOINT = config.axiosInstance_baseURL+'/api/v1/uploads/images';
 export const LOGOUT_USER = config.axiosInstance_baseURL+'/api/v1/user/logout';
 

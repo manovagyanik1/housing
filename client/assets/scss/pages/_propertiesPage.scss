@@ -50,8 +50,13 @@
 
 
 @media all and (max-width: 959px) and (min-width: 600px) {
+  .mobile-hidden {
+    display: none;
+  }
 
-
+  .mobile-displayed {
+    display: block;
+  }
 }
 
 @media all and (max-width: 599px) and (min-width: 320px) {

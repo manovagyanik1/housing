@@ -456,6 +456,11 @@
             "in": "body",
             "schema": {
               "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "manovagyanik1@gmail.com",
+                  "description": "Enter your email"
+                },
                 "password": {
                   "type": "string",
                   "example": "pass1234",

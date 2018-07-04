@@ -112,7 +112,7 @@ const resetPassword = async function (email, password_token, password) {
         let uuid = uuidv4();
         user.passwordAttributes = {
             salt: uuid,
-            hash: md5(uuid + password),
+            hash: md5( password + uuid),
             updated: moment().toISOString()
         };
         await user.save();

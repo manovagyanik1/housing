@@ -12,7 +12,8 @@ import InternalTextBanner from './../components/banners/internalTextBanner';
 import {appName} from '../constants';
 
 import axios from 'axios';
-import {LOG_IN_ENDPOINT_POST} from "../endpoints";
+import {LOG_IN_ENDPOINT_POST, PASSWORD_RESET} from "../endpoints";
+import {Gen} from "../helpers/gen";
 
 class LoginPage extends Component {
 
@@ -31,6 +32,24 @@ class LoginPage extends Component {
         });
     }
 
+    forgotPassword() {
+        const email = document.getElementsByClassName('login-email')[0].value;
+
+        axios.get(`${PASSWORD_RESET}?email=${email}`,)
+            .then((success) => {
+                console.log(success.data.success.message);
+
+                notify.show(success.data.success.message, 'success');
+                this.props.history.push("/reset-password");
+
+            })
+            .catch((error) => {
+                console.log(error.response.data.error.message);
+                notify.show(error.response.data.error.message, 'error');
+            });
+    }
+
+
   submit(data){
       this.toggle();
       console.log(data);
@@ -39,14 +58,18 @@ class LoginPage extends Component {
       axios.post(LOG_IN_ENDPOINT_POST, {email, password})
           .then((success) => {
               console.log(success.data.success.message);
-              this.toggle();
+              this.setState({
+                  loading: false,
+              });
               notify.show(success.data.success.message, 'success');
               this.props.history.push("/");
           })
           .catch((error) => {
+              this.setState({
+                  loading: false,
+              });
               console.log(error.response.data.error.message);
               notify.show(error.response.data.error.message, 'error');
-              this.toggle();
           });
 
   }
@@ -60,7 +83,7 @@ class LoginPage extends Component {
   }
 
     render() {
-      const { handleSubmit } = this.props
+      const { handleSubmit } = this.props;
 
       return (
           
@@ -83,6 +106,7 @@ class LoginPage extends Component {
                                   name="email"
                                   component={renderTextField}
                                   label="Email:"
+                                  className="login-email"
                                 />
                               </div>
 
@@ -111,7 +135,14 @@ class LoginPage extends Component {
                                   </LaddaButton>
                               </div>
 
+
                                 <Link to="/register">Don't have account? Register </Link>
+
+                                <div className="resend-email-container">
+                                    <div onClick={this.forgotPassword.bind(this)}  className="resend-email">
+                                        Forgot password
+                                    </div>
+                                </div>
 
                             </div>
 

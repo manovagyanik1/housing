@@ -3,6 +3,7 @@ import App from './app';
 import ContactPage from './pages/contactPage';
 import RegisterPage from './pages/registerPage';
 import LoginPage from './pages/loginPage';
+import ResetPasswordPage from './pages/resetPasswordPage';
 import Property from './pages/propertyPage';
 import AddProperty from './pages/addPropertyPage';
 import Properties from './pages/propertiesPage';
@@ -95,6 +96,15 @@ export default [
         routes: [
             {
                 ...LoginPage
+            }
+        ]
+    },
+    {
+        path: '/reset-password',
+        ...App,
+        routes: [
+            {
+                ...ResetPasswordPage
             }
         ]
     },
